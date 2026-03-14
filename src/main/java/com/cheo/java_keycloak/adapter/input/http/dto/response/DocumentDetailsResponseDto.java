@@ -18,7 +18,7 @@ public record DocumentDetailsResponseDto(
 ) {
 
     public DocumentDetailsResponseDto(Document document) {
-        this(document.getId(), document.getName().value(), document.getCategory(), document.getPages(), document.getVersion(), document.getCreatedAt(), document.getUpdatedAt(), document.getStatus().value());
+        this(document.getId(), document.getName().value(), document.getCategory(), document.getPages().value(), document.getVersion(), document.getCreatedAt(), document.getUpdatedAt(), document.getStatus().value());
     }
 
 }

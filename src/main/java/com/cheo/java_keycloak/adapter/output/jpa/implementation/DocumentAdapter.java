@@ -46,7 +46,7 @@ public class DocumentAdapter implements DocumentPort {
     }
 
     private DocumentEntity toEntity(Document document) {
-        return new DocumentEntity(document.getId(), document.getName().value(), document.getCategory(), document.getPages(), document.getVersion(), document.getCreatedAt(), document.getUpdatedAt(), document.getStatus().value());
+        return new DocumentEntity(document.getId(), document.getName().value(), document.getCategory(), document.getPages().value(), document.getVersion(), document.getCreatedAt(), document.getUpdatedAt(), document.getStatus().value());
     }
 
 }

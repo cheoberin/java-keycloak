@@ -14,7 +14,7 @@ public class Document {
 
     private DocumentCategory category;
 
-    private Integer pages;
+    private DocumentPages pages;
 
     private Integer version;
 
@@ -28,7 +28,7 @@ public class Document {
         this.id = id;
         this.name = new DocumentName(name);
         this.category = category;
-        this.pages = pages;
+        this.pages = new DocumentPages(pages);
         this.version = version;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -38,7 +38,7 @@ public class Document {
     public Document(DocumentCommand command) {
         this.name = new DocumentName(command.name());
         this.category = require(command.category(), "Document category cannot be null");
-        this.pages = require(command.pages(), "Document pages cannot be null");
+        this.pages = new DocumentPages(command.pages());
         this.version = 1;
         this.createdAt = OffsetDateTime.now();
         this.status = new DocumentStatus(false);
@@ -47,7 +47,7 @@ public class Document {
     public void applyUpdate(DocumentCommand command) {
         this.name = new DocumentName(command.name());
         this.category = require(command.category(), "Document category cannot be null");
-        this.pages = require(command.pages(), "Document pages cannot be null");
+        this.pages = new DocumentPages(command.pages());
         this.version++;
         this.updatedAt = OffsetDateTime.now();
     }
@@ -89,7 +89,7 @@ public class Document {
         return category;
     }
 
-    public Integer getPages() {
+    public DocumentPages getPages() {
         return pages;
     }
 
