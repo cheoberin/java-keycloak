@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.UUID;
 public interface DocumentApi {
 
     @GetMapping
+    @PreAuthorize("hasRole('DOCUMENT_READER')")
     @Operation(summary = "Return a list with all documents")
     @ApiResponse(responseCode = "200", description = "Documents successfully retrieved", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = DocumentResponseDto.class)))
     @ApiResponse(responseCode = "401", description = "Unauthorized - invalid or missing token", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(hidden = true)))
@@ -29,6 +31,7 @@ public interface DocumentApi {
     ResponseEntity<List<DocumentResponseDto>> getAllDocuments();
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('DOCUMENT_READER')")
     @Operation(summary = "Return the details from a specific document")
     @ApiResponse(responseCode = "200", description = "Document successfully retrieved", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = DocumentDetailsResponseDto.class)))
     @ApiResponse(responseCode = "401", description = "Unauthorized - invalid or missing token", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(hidden = true)))
@@ -37,6 +40,7 @@ public interface DocumentApi {
     ResponseEntity<DocumentDetailsResponseDto> getDocument(@PathVariable UUID id);
 
     @PostMapping
+    @PreAuthorize("hasRole('DOCUMENT_MANAGER')")
     @Operation(summary = "Create a new document")
     @ApiResponse(responseCode = "201", description = "Documents successfully created", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = DocumentDetailsResponseDto.class)))
     @ApiResponse(responseCode = "401", description = "Unauthorized - invalid or missing token", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(hidden = true)))
@@ -44,6 +48,7 @@ public interface DocumentApi {
     ResponseEntity<DocumentDetailsResponseDto> createDocument(@RequestBody @Valid DocumentRequestDto documentRequestDto);
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('DOCUMENT_MANAGER')")
     @Operation(summary = "Update document information")
     @ApiResponse(responseCode = "200", description = "Documents successfully updated", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = DocumentDetailsResponseDto.class)))
     @ApiResponse(responseCode = "401", description = "Unauthorized - invalid or missing token", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(hidden = true)))
@@ -52,6 +57,7 @@ public interface DocumentApi {
     ResponseEntity<DocumentDetailsResponseDto> updateDocument(@PathVariable UUID id, @RequestBody @Valid DocumentRequestDto documentRequestDto);
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('DOCUMENT_ADMIN')")
     @Operation(summary = "Delete a document")
     @ApiResponse(responseCode = "204", description = "Documents successfully deleted", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(hidden = true)))
     @ApiResponse(responseCode = "401", description = "Unauthorized - invalid or missing token", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(hidden = true)))
@@ -59,6 +65,7 @@ public interface DocumentApi {
     ResponseEntity<Void> deleteDocument(@PathVariable UUID id);
 
     @PutMapping("/{id}/activate")
+    @PreAuthorize("hasRole('DOCUMENT_MANAGER')")
     @ApiResponse(responseCode = "200", description = "Documents successfully activated", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = DocumentDetailsResponseDto.class)))
     @ApiResponse(responseCode = "401", description = "Unauthorized - invalid or missing token", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(hidden = true)))
     @ApiResponse(responseCode = "403", description = "Forbidden - insufficient permissions", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(hidden = true)))
@@ -66,6 +73,7 @@ public interface DocumentApi {
     ResponseEntity<DocumentDetailsResponseDto> activateDocument(@PathVariable UUID id);
 
     @PutMapping("/{id}/deactivate")
+    @PreAuthorize("hasRole('DOCUMENT_MANAGER')")
     @ApiResponse(responseCode = "200", description = "Documents successfully activated", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = DocumentDetailsResponseDto.class)))
     @ApiResponse(responseCode = "401", description = "Unauthorized - invalid or missing token", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(hidden = true)))
     @ApiResponse(responseCode = "403", description = "Forbidden - insufficient permissions", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(hidden = true)))

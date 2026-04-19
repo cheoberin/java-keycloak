@@ -1,11 +1,18 @@
 spring:
   datasource:
-    url: ${DEV_DB_URL}/${DEV_DB_NAME}
-    username: ${DEV_DB_USER}
-    password: ${DEV_DB_PASSWORD}
+    url: ${DB_URL}/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+
   jpa:
     hibernate:
       ddl-auto: validate
     show-sql: true
     properties:
       hibernate.format_sql: true
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER_URI}
