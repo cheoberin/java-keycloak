@@ -4,6 +4,7 @@ import com.cheo.java_keycloak.domain.exceptions.DocumentConflictException;
 import com.cheo.java_keycloak.domain.exceptions.DocumentValidationException;
 
 import java.time.OffsetDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Document {
@@ -71,10 +72,11 @@ public class Document {
     }
 
     private <T> T require(T value, String message) {
-        if (value == null) {
+        try {
+            return Objects.requireNonNull(value);
+        } catch (NullPointerException e) {
             throw new DocumentValidationException(message);
         }
-        return value;
     }
 
     public UUID getId() {

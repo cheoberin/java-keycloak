@@ -78,7 +78,7 @@ public class ControllerAdviser {
     }
 
     @ExceptionHandler(AuthorizationDeniedException.class)
-    public ResponseEntity<Void> handleAuthorizationDeniedException(AuthorizationDeniedException error) {
+    public ResponseEntity<Void> handleAuthorizationDeniedException() {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
