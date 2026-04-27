@@ -9,6 +9,8 @@ public record DocumentName(String value) {
             throw new DocumentValidationException("Document name cannot be empty");
         }
 
+        value = value.trim();
+
         if (value.length() > 255) {
             throw new DocumentValidationException("Document name too long");
         }
